@@ -1,0 +1,39 @@
+.welcomeBoardContainer{
+  display: grid;
+  grid-template-rows: 30px 30px 250px;
+  row-gap: 90px;
+  justify-items: center;
+  align-items: center;
+}
+
+.tableHeader{
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  border: 1px solid #eee;
+  background-color: darkgray;
+  color:azure;
+  column-gap:1px;
+  justify-items: center;
+  align-items: center;
+  padding: 5px;
+}
+.tableBody{
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  border: 1px solid #eee;
+  column-gap:1px;
+  justify-items: center;
+  align-items: center;
+  padding: 5px;
+}
+
+
+
+.welcomeBoardContainer button{
+  /* background-color: burlywood; */
+  background-color: azure;
+  border: 1px solid burlywood;
+  /* color: white; */
+  padding: 20px;
+  width: 200px;
+}

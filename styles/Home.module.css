@@ -127,3 +127,33 @@
     filter: invert(1);
   }
 }
+.welcomeBoardContainer{
+  display: grid;
+  grid-template-rows: 30px 30px 250px;
+  row-gap: 90px;
+  justify-items: center;
+  align-items: center;
+}
+
+.welcomeBoardContainer input{
+  height: 40px;
+  width: 200px;
+  border: 1px solid snow;
+  padding-left: 20px ;
+}
+.welcomeBoardContainer input[type=text]:focus{
+  outline: 1px solid burlywood;
+}
+.welcomeBoardContainer button{
+  /* background-color: burlywood; */
+  background-color: azure;
+  border: 1px solid burlywood;
+  /* color: white; */
+  padding: 20px;
+  width: 200px;
+}
+/* .gridContainer{
+  display: 'grid';
+  grid-template-columns: "140px 140px 1400x"
+} */
+

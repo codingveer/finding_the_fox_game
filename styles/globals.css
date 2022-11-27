@@ -4,6 +4,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-image: url(./../images/bg.svg);
+  background-size: cover;
 }
 
 a {
@@ -24,3 +26,28 @@ a {
     background: black;
   }
 }
+
+.imageContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.hidden{
+  display: hidden;
+}
+.visible{
+  visibility: visible;
+}
+
+.boardContainer{
+  background-color: #EBF6F8;
+  border-radius: 5px;
+  padding: 20px;
+  min-height: 550px;
+  opacity: 0.9;
+  min-width: 500px;
+}
+
