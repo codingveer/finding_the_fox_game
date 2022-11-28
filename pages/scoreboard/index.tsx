@@ -10,9 +10,9 @@ const ScoreBoard = () => {
 
   useEffect(() => {
       // @ts-ignore
-      setName(JSON.parse( window?.localStorage.getItem(name) || ''));
+      setName(JSON.parse( window?.localStorage.getItem(name) || ' '));
       // @ts-ignore
-      setScore(JSON.parse(window?.localStorage.getItem('finalscore')|| ''));
+      setScore(JSON.parse(window?.localStorage.getItem('finalScore')|| ' '));
     // setRank(JSON.parse(window.localStorage.getItem('rank'));
   }, [])
   return (

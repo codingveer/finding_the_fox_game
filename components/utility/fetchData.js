@@ -28,7 +28,8 @@ const fetchData = async () => {
       .flat()
       .map((data) => data.message || data.image || data.url);
      imageUrls = [...imageUrls, ...imageUrlsData];
-    if(imageUrls.length>1){ shuffleArray([...imageUrls]);}
+
+    if(imageUrls.length>1){ shuffleArray(imageUrls);}
     return imageUrls
   } catch (e) {
     console.log(e);
