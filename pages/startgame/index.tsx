@@ -6,20 +6,18 @@ import { after } from "underscore";
 import foxLoading from "./../../images/fox_loading.gif";
 import { fetchData, shuffleArray } from "./../../components/utility/fetchData";
 import { cacheImages } from "./../../components/utility/prerender";
-
+import UserStats from '../../components/UserStats'
 type IProps = {data: string[]};
 let imageStore: any = [];
 
 let timeInterval: ReturnType<typeof setInterval>;
-let countDownTimeInterval: ReturnType<typeof setInterval>;
-function ImagesComp(props:IProps) {
 
+function ImagesComp(props:IProps) {
   const [showAllImagesOnBoard, setShowAllImagesOnBoard] = useState(false);
   const score = useRef(0);
   const [imageToRender, setImageToRender] = useState<string[]>([]);
   const router = useRouter();
   const queryData: any = router.query;
-  const [countDownTimer, setCountDownTimer] = useState(30);
   let initialRender = useRef(true);
   const [finalScore, setFinalScore]= useLocalStorage('finalScore','0');
 
@@ -52,11 +50,11 @@ function ImagesComp(props:IProps) {
     if(!imageStore.length){
       refetchData();
     }
-    //if(imageStore.length) setImageToRender(imageStore.splice(0,9));
+    //setImageToRender(imageStore.splice(0,9))
+    
   };
 
-  const onComplete = after(imageToRender.length, (event, index:number) => {
-    console.log(event,'this is done');
+  const onComplete = after(imageToRender.length, (index:number) => {
     setShowAllImagesOnBoard(true);
   });
  
@@ -74,24 +72,18 @@ function ImagesComp(props:IProps) {
     timeInterval = setInterval(() => {
       router.push("/scoreboard");
     }, 30000);
-    countDownTimeInterval = setInterval(() => {
-      if(countDownTimer>0){
-        setCountDownTimer((pre:number) => pre-1);
-      }
-    }, 1000);
     return () => {
       clearInterval(timeInterval);
-      clearInterval(countDownTimeInterval);
     }
   },[]);
-
-  useEffect(()=>{
-    if(imageToRender.length>=9){
-      setShowAllImagesOnBoard(true);
-    }else{
-      setShowAllImagesOnBoard(false);
-    }
-  },[imageToRender])
+  // 
+  // useEffect(()=>{
+  //   if(imageToRender.length>=9){
+      
+  //   }else{
+  //     setShowAllImagesOnBoard(false);
+  //   }
+  // },[imageToRender])
 
   const onClickAnyImage = async (index: number, url: string) => {
     setShowAllImagesOnBoard(false)
@@ -103,16 +95,13 @@ function ImagesComp(props:IProps) {
       let decrementScore = score.current--;
       setFinalScore(decrementScore.toString());
     }
-    if(!imageStore.length) {
       refetchData()
       updateReFetchedImage();
-    }
-      refetchData()
   }
   
   // const completedLoadingAllImages = (index:number) => {
   //   if (index === 8) {
-  //     setShowAllImagesOnBoard(true);
+  //     
   //   }
   // };
   
@@ -121,8 +110,10 @@ function ImagesComp(props:IProps) {
     <div className="imageContainer">
       <div className="boardContainer">
         <div>
+          <div>
           <div>Score:{score.current}</div>
-          <div>Time Remaining: {countDownTimer}</div>
+              <UserStats/>
+          </div>
           <>
             <div
               style={{
@@ -143,13 +134,13 @@ function ImagesComp(props:IProps) {
             >
               {imageToRender.map((url: any, index: number) => (
                 <div className="grid-item" key={url}>
-                  <img
+                  <Image
                     src={url}
                    // onLoadingComplete={(e)=>onComplete(e)}
                     onLoad={(e)=>onComplete(e)}
                     alt={""}
-                    width="150px"
-                    height="150px"
+                    width="150"
+                    height="150"
                     onClick={() => onClickAnyImage(index, url)}
                     // priority
                     // blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...'
