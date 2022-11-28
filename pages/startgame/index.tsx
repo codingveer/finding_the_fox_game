@@ -27,26 +27,26 @@ function ImagesComp(props:IProps) {
     let getData:string[] = await fetchData() || [];
       imageStore = [...imageStore, ...getData];
       cacheImages(getData);
-      updateReFetchedImage()
-  }
+    }
   const updateReFetchedImage = ()=>{
     let geNexBatchImages =imageStore.splice(0, 9);
     setImageToRender(geNexBatchImages);  
-    
   }
-
+  const updateImageStore = (newImagesUrlFetched:string[])=>{
+    imageStore = [...imageStore, ...newImagesUrlFetched];
+  }
   const startGameInit = () => {
     if (Object.keys(queryData).length) {
-       let dataFromQuery:string[]= Object.values(queryData)
-       imageStore = [...imageStore, ...dataFromQuery];
-      cacheImages(dataFromQuery);
-      setShowAllImagesOnBoard(true)
+       let ImageUrlFromQuery:string[]= Object.values(queryData)
+        updateImageStore(ImageUrlFromQuery);
+        updateReFetchedImage()
+        cacheImages(ImageUrlFromQuery);
+      //setShowAllImagesOnBoard(true)
     } 
     if(props.data) {
-      imageStore = [...imageStore, ...props.data];
+      updateImageStore(props.data);
+      updateReFetchedImage()
       cacheImages(props.data);   
-      //props.data=[];
-      //setShowAllImagesOnBoard(true);
       refetchData(); 
     }
     if(!imageStore.length){
@@ -55,8 +55,9 @@ function ImagesComp(props:IProps) {
     //if(imageStore.length) setImageToRender(imageStore.splice(0,9));
   };
 
-  const onComplete = after(imageToRender.length, () => {
-    
+  const onComplete = after(imageToRender.length, (event, index:number) => {
+    console.log(event,'this is done');
+    setShowAllImagesOnBoard(true);
   });
  
   
@@ -84,8 +85,16 @@ function ImagesComp(props:IProps) {
     }
   },[]);
 
+  useEffect(()=>{
+    if(imageToRender.length>=9){
+      setShowAllImagesOnBoard(true);
+    }else{
+      setShowAllImagesOnBoard(false);
+    }
+  },[imageToRender])
 
   const onClickAnyImage = async (index: number, url: string) => {
+    setShowAllImagesOnBoard(false)
    const clickedFox = url.includes("fox");
     if (clickedFox) {
       let incrementScore = score.current++;
@@ -94,23 +103,19 @@ function ImagesComp(props:IProps) {
       let decrementScore = score.current--;
       setFinalScore(decrementScore.toString());
     }
-    setShowAllImagesOnBoard(false);
-    if(imageStore.length<=9 && imageStore.length>0 ) {
-      updateReFetchedImage();
-    }else if(imageStore.length>9){
-      setTimeout(() =>refetchData(),10)
-    }else{
+    if(!imageStore.length) {
       refetchData()
+      updateReFetchedImage();
     }
-  };
-  const completedLoadingAllImages = (index:number) => {
-    if (index === 8) {
-      setShowAllImagesOnBoard(true);
-    }
-  };
-  const customLoader = () => {
-    return `${foxLoading}?w=300&q=75`
+      refetchData()
   }
+  
+  // const completedLoadingAllImages = (index:number) => {
+  //   if (index === 8) {
+  //     setShowAllImagesOnBoard(true);
+  //   }
+  // };
+  
   
   return (
     <div className="imageContainer">
@@ -138,17 +143,17 @@ function ImagesComp(props:IProps) {
             >
               {imageToRender.map((url: any, index: number) => (
                 <div className="grid-item" key={url}>
-                  <Image
+                  <img
                     src={url}
-                    onLoadingComplete={()=>completedLoadingAllImages(index)}
-                    onLoad={()=>onComplete()}
+                   // onLoadingComplete={(e)=>onComplete(e)}
+                    onLoad={(e)=>onComplete(e)}
                     alt={""}
-                    width="150"
-                    height="150"
+                    width="150px"
+                    height="150px"
                     onClick={() => onClickAnyImage(index, url)}
-                    priority
-                    blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...'
-                    placeholder="blur"
+                    // priority
+                    // blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...'
+                    // placeholder="blur"
                   />
                 </div>
               ))}
@@ -159,7 +164,7 @@ function ImagesComp(props:IProps) {
     </div>
   );
 }
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const data = (await fetchData()) || [];
