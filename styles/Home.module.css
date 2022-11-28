@@ -147,7 +147,7 @@
 .welcomeBoardContainer button{
   /* background-color: burlywood; */
   background-color: azure;
-  border: 1px solid burlywood;
+  border: 1px solid hsl(50, 70%, 81%);
   /* color: white; */
   padding: 20px;
   width: 200px;
@@ -157,3 +157,6 @@
   grid-template-columns: "140px 140px 1400x"
 } */
 
+.welcomeBoardContainer button .yellowBg{
+  border:  1px solid hsl(50, 70%, 81%);
+}
