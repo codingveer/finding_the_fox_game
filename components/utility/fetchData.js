@@ -4,13 +4,18 @@ function shuffleArray(array) {
   });
 }
 
-const getImageData = async () => {
+const fetchData = async () => {
+  let imageUrls =[];
   const fetchWoflImage = fetch("https://randomfox.ca/floof/");
   let promiseCallApi = [];
-  const fetchCatImages = fetch("https://api.thecatapi.com/v1/images/search");
-  const dogImage = fetch("https://dog.ceo/api/breeds/image/random");
-  for (let i = 0; i < 4; i++) {
-    promiseCallApi.push(fetch("https://api.thecatapi.com/v1/images/search"), fetch("https://dog.ceo/api/breeds/image/random"))
+  let ApiCalled =0;
+  while(ApiCalled< 4) {
+    promiseCallApi
+    .push(
+          fetch("https://api.thecatapi.com/v1/images/search"),
+          fetch("https://dog.ceo/api/breeds/image/random")
+    )
+    ApiCalled+=1
   }
   promiseCallApi.push(fetchWoflImage);
   //console.log(promiseCallApi, 'promiseCallApi')
@@ -22,8 +27,9 @@ const getImageData = async () => {
     let imageUrlsData = getResponseFromAllApi
       .flat()
       .map((data) => data.message || data.image || data.url);
-    imageUrls = [...imageUrls, ...imageUrlsData];
-    shuffleArray([...imageUrls]);
+     imageUrls = [...imageUrls, ...imageUrlsData];
+    if(imageUrls.length>1){ shuffleArray([...imageUrls]);}
+    return imageUrls
   } catch (e) {
     console.log(e);
   }
@@ -31,4 +37,4 @@ const getImageData = async () => {
 };
 
 
-export default getImageData;
+export  {fetchData, shuffleArray};

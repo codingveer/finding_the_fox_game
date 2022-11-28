@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images:{
-    domains:['cdn1.theimageapi.com','25.media.tumblr.com','cdn2.thecatapi.com','images.dog.ceo','randomfox.ca']
+    domains:['api.thecatapi.com','cdn1.theimageapi.com','25.media.tumblr.com','cdn2.thecatapi.com','images.dog.ceo','randomfox.ca','27.media.tumblr.com','28.media.tumblr.com','localhost']
   }
 
 }

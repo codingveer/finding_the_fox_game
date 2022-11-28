@@ -7,9 +7,12 @@ const ScoreBoard = () => {
   const [score, setScore] = useState('finalscore');
   const [rank, setRank] = useState(1);
   const date = new Date().toDateString();
+
   useEffect(() => {
-    setName(JSON.parse(window.localStorage.getItem('name')));
-    setScore(JSON.parse(window.localStorage.getItem('finalscore')));
+      // @ts-ignore
+      setName(JSON.parse( window?.localStorage.getItem(name) || ''));
+      // @ts-ignore
+      setScore(JSON.parse(window?.localStorage.getItem('finalscore')|| ''));
     // setRank(JSON.parse(window.localStorage.getItem('rank'));
   }, [])
   return (
