@@ -8,13 +8,13 @@ import {fetchData} from '../components/utility/fetchData';
 import { useEffect, useState } from "react";
 const Home: NextPage = (props: any) => {
   // Similar to useState but first args is key to the value in local storage.
-  const [name, setName] = useLocalStorage("name", " ");
-  const [player, setPlayer]=useState(true);
+  const [name, setName] = useLocalStorage("name", "");
+  const [player, setPlayerName]=useState(true);
   
   /*
   1. It’s using the cacheImages function to cache the images.
   2. It’s using the useEffect hook to run the cacheImages function when the component is mounted.
-  3. It’s using the setPlayer function to set the player to true.
+  3. It’s using the setPlayerName function to set the player to true.
   4. It’s using the editPlayer function to set the player to false.
   */
   useEffect(() => {
@@ -32,11 +32,11 @@ const Home: NextPage = (props: any) => {
 
   
   const editPlayer  = () =>{
-    setPlayer(true)
+    setPlayerName(true)
   }
   const handleBlur = () =>{
     console.log(name,'name');
-    (name!="name") ?setPlayer(false) :setPlayer(true)
+    (name!=="" ) ?setPlayerName(false) :setPlayerName(true)
   }
   return (
     <div className="imageContainer">

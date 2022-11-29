@@ -158,7 +158,7 @@ function ImagesComp(props: IProps) {
     <div className="imageContainer">
       <div className="boardContainer">
         <div>
-          <div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr', paddingBottom:'10px'}}>
             <div>Score:{score.current}</div>
             <UserStats />
           </div>
