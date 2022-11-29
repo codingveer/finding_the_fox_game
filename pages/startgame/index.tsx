@@ -4,14 +4,15 @@ import { useRouter } from "next/router";
 import useLocalStorage from "./../../components/utility/useStorage/";
 import { after } from "underscore";
 import foxLoading from "./../../images/fox_loading.gif";
-import { fetchData, shuffleArray } from "./../../components/utility/fetchData";
+import { fetchData } from "./../../components/utility/fetchData";
 import { cacheImages } from "./../../components/utility/prerender";
-import UserStats from '../../components/UserStats'
+import UserStats from '../../components/UserStats';
+
 type IProps = {data: string[]};
 let imageStore: any = [];
-
 let timeInterval: ReturnType<typeof setInterval>;
 let timeIntervalFetch: ReturnType<typeof setInterval>;
+
 function ImagesComp(props:IProps) {
   const [showAllImagesOnBoard, setShowAllImagesOnBoard] = useState(false);
   const score = useRef(0);
@@ -39,7 +40,6 @@ function ImagesComp(props:IProps) {
         updateImageStore(ImageUrlFromQuery);
         updateReFetchedImage()
         cacheImages(ImageUrlFromQuery);
-      //setShowAllImagesOnBoard(true)
     } 
     if(props.data) {
       updateImageStore(props.data);
@@ -79,7 +79,7 @@ function ImagesComp(props:IProps) {
   useEffect(()=>{
     timeIntervalFetch = setInterval(() => {
       refetchData()
-    }, 500);
+    }, 300);
     return () => {
       clearInterval(timeIntervalFetch);
     }
@@ -87,7 +87,7 @@ function ImagesComp(props:IProps) {
   
   useEffect(()=>{
     console.log(imageStore.length)
-    if(imageStore.length > 150){
+    if(imageStore.length > 600){
       clearInterval(timeIntervalFetch);
     }
   },[imageToRender])
@@ -105,13 +105,6 @@ function ImagesComp(props:IProps) {
       //refetchData()
       updateReFetchedImage();
   }
-  
-  // const completedLoadingAllImages = (index:number) => {
-  //   if (index === 8) {
-  //     
-  //   }
-  // };
-  
   
   return (
     <div className="imageContainer">
@@ -143,16 +136,12 @@ function ImagesComp(props:IProps) {
                 <div className="grid-item" key={url}>
                   <Image
                     src={url}
-                   // onLoadingComplete={(e)=>onComplete(e)}
                     onLoad={(e)=>onComplete(e)}
                     alt={""}
                     width="150"
                     height="150"
                     onClick={() => onClickAnyImage(index, url)}
-                    // priority
-                    // blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...'
-                    // placeholder="blur"
-                  />
+                   />
                 </div>
               ))}
             </div>

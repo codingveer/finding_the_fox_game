@@ -23,7 +23,7 @@ const Home: NextPage = (props: any) => {
       <div className="boardContainer">
         <div className={`${styles.welcomeBoardContainer}`}>
           <div>
-            <h3>Click the Fox! game</h3>
+            <h2>Click the Fox! game</h2>
           </div>
           {player ? <div>
             <label htmlFor="name">
@@ -38,17 +38,17 @@ const Home: NextPage = (props: any) => {
               />
             </label>
           </div>
-          :<div onClick={editPlayer}>Hello {name}</div>
+          :<div className={`${styles.playerName}`} onClick={editPlayer}>Hello {name}</div>
           }
           {player ?<div>
-            <button >Play !</button>
+            <button style={{background:'',border:'1px solid #60af56', color:'#333'}}>Play !</button>
           </div>
           :<div>
             <Link href={{
               pathname: '/startgame',
               query: { ...props.data }
             }}>
-              <button style={{background:`${player ? '': 'yellow'}`}}>Play !</button>
+              <button style={{background:`${player ? '': '#60af56'}`}}>Play !</button>
             </Link>
           </div>}
         </div>

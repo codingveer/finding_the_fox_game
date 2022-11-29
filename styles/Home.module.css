@@ -140,6 +140,10 @@
   width: 200px;
   border: 1px solid snow;
   padding-left: 20px ;
+  margin-left: 25px;
+  font-family: "Indie Flower";
+  font-size: 2rem;
+  color: #333;
 }
 .welcomeBoardContainer input[type=text]:focus{
   outline: 1px solid burlywood;
@@ -159,4 +163,10 @@
 
 .welcomeBoardContainer button .yellowBg{
   border:  1px solid hsl(50, 70%, 81%);
+}
+
+.playerName {
+  font-family: "Indie Flower";
+  font-size: 2.5rem;
+  color: #333;
 }
