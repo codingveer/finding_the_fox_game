@@ -21,7 +21,7 @@ export default function UserStats() {
   }, []);
   return (
     <>
-      <div>Time Remaining: {countDownTimer}</div>
+      <div>Time Remaining: {(countDownTimer>0)?countDownTimer:''}</div>
     </>
   );
 }

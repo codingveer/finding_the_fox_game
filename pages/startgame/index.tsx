@@ -6,7 +6,7 @@ import { after } from "underscore";
 import { fetchData } from "./../../components/utility/fetchData";
 import { cacheImages } from "../../components/utility/prerender";
 import UserStats from "../../components/UserStats";
-import fox_loading from '../../public/static/images/fox_loading.webp'
+import fox_loading from '../../public/static/images/fox_loading.gif'
 type IProps = { data: string[] };
 let imageStore: any = [];
 let timeInterval: ReturnType<typeof setInterval>;
@@ -101,7 +101,7 @@ function ImagesComp(props: IProps) {
   */
   useEffect(() => {
     timeInterval = setInterval(() => {
-      router.push("/scoreboard");
+       router.push("/scoreboard");
     }, 30000);
     return () => {
       clearInterval(timeInterval);
@@ -115,7 +115,7 @@ function ImagesComp(props: IProps) {
   useEffect(() => {
     timeIntervalFetch = setInterval(() => {
       refetchData();
-    }, 300);
+    }, 1000);
     return () => {
       clearInterval(timeIntervalFetch);
     };
@@ -166,11 +166,11 @@ function ImagesComp(props: IProps) {
               style={{
                 display: showAllImagesOnBoard ? "none" : "block",
                 position: "absolute",
-                top: "25%",
-                left: "40%",
+                top: "35%",
+                left: "45%",
               }}
             >
-              <Image src={fox_loading} width="300" height="300" alt="loading" />
+              <Image src={fox_loading} width="200" height="200" alt="loading" />
             </div>
             <div
               style={{
