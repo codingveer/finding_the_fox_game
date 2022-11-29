@@ -1,3 +1,4 @@
+import Image from 'next/image';
 /*
 1. We’re creating a new Promise for each image.
 2. We’re creating a new Image object for each image.
@@ -9,12 +10,12 @@ const cacheImages = async (srcArray: string[]) => {
 
   const promises = srcArray.map((src) => {
     return new Promise<void>((resolve, reject) => {
-      // const img = <Image src={src}
-      //   onLoad={() => resolve()} />;
-      const img: any = new Image();
-      img.src = src;
-      img.onload = resolve();
-      img.onnerror = reject();
+      const img = <Image src={src}
+        onLoad={() => resolve()} alt='' />;
+      // const img: any = new Image();
+      // img.src = src;
+      // img.onload = resolve();
+      // img.onnerror = reject();
     });
   });
 }

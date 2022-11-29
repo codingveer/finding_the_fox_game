@@ -8,32 +8,34 @@
 
 .tableHeader{
   display: grid;
-  grid-template-columns: repeat(4, 100px);
+  grid-template-columns:  50px 150px 150px 50px;
   border: 1px solid #eee;
   background-color: darkgray;
   color:azure;
   column-gap:1px;
-  justify-items: center;
-  align-items: center;
+  /* justify-items: center;
+  align-items: center; */
   padding: 5px;
 }
 .tableBody{
   display: grid;
-  grid-template-columns: repeat(4, 100px);
+  grid-template-columns: 50px 150px 150px 50px;
   border: 1px solid #eee;
   column-gap:1px;
-  justify-items: center;
-  align-items: center;
+  /* justify-items: center;
+  align-items: center; */
   padding: 5px;
 }
 
 
 
-.welcomeBoardContainer button{
+.welcomeBoardContainer button {
   /* background-color: burlywood; */
-  background-color: azure;
-  border: 1px solid burlywood;
-  /* color: white; */
+  background-color: #FFC143;
+  border: 1px solid #FFC143;
+  color: white; 
   padding: 20px;
-  width: 200px;
+  width: fit-content;
+  margin-left: 20px;
 }
+

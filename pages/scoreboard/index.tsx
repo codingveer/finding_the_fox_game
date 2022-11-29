@@ -34,7 +34,6 @@ const ScoreBoard = () => {
       <div className="boardContainer">
         <div className={`${styles.welcomeBoardContainer}`}>
           <div>
-            <h3>Click the Fox! game</h3>
             <h4>SCOREBOARD</h4>
           </div>
           <div >
@@ -52,8 +51,8 @@ const ScoreBoard = () => {
             </div>
           </div>
           <div>
-            <Link href='/'><button>To Welcome Screen</button></Link>
-            <Link href='/startgame'><button>Play !</button></Link>
+            <Link href='/'> <button className={`${styles.home}`}> Home</button></Link>
+            <Link href='/startgame'><button  className={`${styles.play}`}>Play !</button></Link>
           </div>
 
         </div>
