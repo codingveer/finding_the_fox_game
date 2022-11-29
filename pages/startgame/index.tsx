@@ -11,7 +11,7 @@ type IProps = {data: string[]};
 let imageStore: any = [];
 
 let timeInterval: ReturnType<typeof setInterval>;
-
+let timeIntervalFetch: ReturnType<typeof setInterval>;
 function ImagesComp(props:IProps) {
   const [showAllImagesOnBoard, setShowAllImagesOnBoard] = useState(false);
   const score = useRef(0);
@@ -76,14 +76,21 @@ function ImagesComp(props:IProps) {
       clearInterval(timeInterval);
     }
   },[]);
-  // 
-  // useEffect(()=>{
-  //   if(imageToRender.length>=9){
-      
-  //   }else{
-  //     setShowAllImagesOnBoard(false);
-  //   }
-  // },[imageToRender])
+  useEffect(()=>{
+    timeIntervalFetch = setInterval(() => {
+      refetchData()
+    }, 500);
+    return () => {
+      clearInterval(timeIntervalFetch);
+    }
+  },[]);
+  
+  useEffect(()=>{
+    console.log(imageStore.length)
+    if(imageStore.length > 150){
+      clearInterval(timeIntervalFetch);
+    }
+  },[imageToRender])
 
   const onClickAnyImage = async (index: number, url: string) => {
     setShowAllImagesOnBoard(false)
@@ -95,7 +102,7 @@ function ImagesComp(props:IProps) {
       let decrementScore = score.current--;
       setFinalScore(decrementScore.toString());
     }
-      refetchData()
+      //refetchData()
       updateReFetchedImage();
   }
   
