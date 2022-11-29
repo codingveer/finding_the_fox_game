@@ -14,16 +14,29 @@ const Home: NextPage = (props: any) => {
   /*
   1. It’s using the cacheImages function to cache the images.
   2. It’s using the useEffect hook to run the cacheImages function when the component is mounted.
-  3. It’s using the useEffect hook to run the cacheImages function when the component is updated.
-  4. It’s using the setPlayer function to set the player to true.
-  5. It’s using the editPlayer function to set the player to false.
+  3. It’s using the setPlayer function to set the player to true.
+  4. It’s using the editPlayer function to set the player to false.
   */
   useEffect(() => {
-    window.localStorage.setItem("name", " ");
-    cacheImages(props.data)
+    setName(" ");
+    
   }, []);
+
+  /*
+  1. It’s using the cacheImages function to cache the images.
+  2. It’s using the useEffect hook to run the cacheImages function when the data changes.
+  */
+  useEffect(()=>{
+    cacheImages(props.data)
+  },[props.data]);
+
+  
   const editPlayer  = () =>{
     setPlayer(true)
+  }
+  const handleBlur = () =>{
+    console.log(name,'name');
+    (name!="name") ?setPlayer(false) :setPlayer(true)
   }
   return (
     <div className="imageContainer">
@@ -41,7 +54,7 @@ const Home: NextPage = (props: any) => {
                 placeholder="Enter your name"
                 value={name}
                 onChange={(e) =>setName(e.target.value)}
-                onBlur={() =>setPlayer(false)}
+                onBlur={handleBlur}
               />
             </label>
           </div>
