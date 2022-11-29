@@ -11,6 +11,13 @@ const Home: NextPage = (props: any) => {
   const [name, setName] = useLocalStorage("name", " ");
   const [player, setPlayer]=useState(true);
   
+  /*
+  1. It’s using the cacheImages function to cache the images.
+  2. It’s using the useEffect hook to run the cacheImages function when the component is mounted.
+  3. It’s using the useEffect hook to run the cacheImages function when the component is updated.
+  4. It’s using the setPlayer function to set the player to true.
+  5. It’s using the editPlayer function to set the player to false.
+  */
   useEffect(() => {
     window.localStorage.setItem("name", " ");
     cacheImages(props.data)
