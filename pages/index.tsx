@@ -34,8 +34,7 @@ const Home: NextPage = (props: any) => {
   const editPlayer  = () =>{
     setEditPlayerNameInput(true)
   }
-  const handleBlur = (e) =>{
-    console.log(e.target.value,'name');
+  const handleBlur = () =>{
     (name!=="" ) ?setEditPlayerNameInput(false) :setEditPlayerNameInput(true)
   }
   return (
@@ -43,7 +42,7 @@ const Home: NextPage = (props: any) => {
       <div className="boardContainer">
         <div className={`${styles.welcomeBoardContainer}`}>
           <div>
-            <h2>Click the Fox! game</h2>
+            <h2>Click the Fox🦊!</h2>
           </div>
           {editPlayerNameInput ? <div>
             <label htmlFor="name">
