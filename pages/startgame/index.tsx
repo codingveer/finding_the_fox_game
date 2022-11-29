@@ -170,7 +170,7 @@ function ImagesComp(props: IProps) {
                 left: "45%",
               }}
             >
-              <Image src={fox_loading} width="200" height="200" alt="loading" />
+              <Image src={fox_loading} unoptimized={true} width="200" height="200" alt="loading" />
             </div>
             <div
               style={{
