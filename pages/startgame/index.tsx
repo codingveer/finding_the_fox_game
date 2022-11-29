@@ -3,11 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import useLocalStorage from "./../../components/utility/useStorage/";
 import { after } from "underscore";
-import foxLoading from "./../../images/fox_loading.gif";
 import { fetchData } from "./../../components/utility/fetchData";
 import { cacheImages } from "../../components/utility/prerender";
 import UserStats from "../../components/UserStats";
-
+import fox_loading from '../../public/static/images/fox_loading.webp'
 type IProps = { data: string[] };
 let imageStore: any = [];
 let timeInterval: ReturnType<typeof setInterval>;
@@ -171,7 +170,7 @@ function ImagesComp(props: IProps) {
                 left: "40%",
               }}
             >
-              <Image src={foxLoading} width="300" height="300" alt="loading" />
+              <Image src={fox_loading} width="300" height="300" alt="loading" />
             </div>
             <div
               style={{
