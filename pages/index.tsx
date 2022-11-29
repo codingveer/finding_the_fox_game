@@ -67,7 +67,8 @@ const Home: NextPage = (props: any) => {
             <Link href={{
               pathname: '/startgame',
               query: { ...props.data }
-            }}>
+            }}
+            as={`/startgame`}>
               <button style={{background:`${player ? '': '#60af56'}`}}>Play !</button>
             </Link>
           </div>}
