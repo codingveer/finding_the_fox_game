@@ -1,33 +1,38 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import styles from "./../../styles/ScoreBoard.module.css";
+import styles from "./ScoreBoard.module.css";
+import {userScores} from "./../../data/score";
 
+type IProps ={
+  name:string,
+  date:string,
+  score:number,
+  rank?:number
+}
+
+let userScoreSorted:IProps[] =[];
 const ScoreBoard = () => {
-  const [name, setName] = useState<string>("name");
-  const [score, setScore] = useState('finalscore');
-  const [rank, setRank] = useState(1);
-  const date = new Date().toDateString();
-
+  const [showScoreBoard, setShowScoreBoard] = useState(false);
   /*
-  1. We’re using the useEffect hook to run a function when the component is mounted.
-  2. Inside the function, we’re checking if the localStorage has a value for the name.
-  3. If it does, we’re setting the name state to the value of the localStorage.
-  4. We’re also checking if the localStorage has a value for the finalScore.
-  5. If it does, we’re setting the score state to the value of the localStorage.
-  6. We’re also checking if the localStorage has a value for the rank.
-  7. If it does, we’re setting the rank state to the value of the localStorage.
+     we’re checking if the localStorage has a value for the name,finalScore
+     If it does, we’re setting the name state to the value of the localStorage.
   */
   useEffect(() => {
-      
-      if(window?.localStorage.getItem(name)){
-        setName(JSON.parse( window?.localStorage.getItem(name) || ' '));
-      }
-      if(window?.localStorage.getItem(name)){
-        setScore(JSON.parse(window?.localStorage.getItem('finalScore')|| ' '));
-      }   
-     
-    // setRank(JSON.parse(window.localStorage.getItem('rank'));
-  }, [])
+    getScore()
+  }, []);
+
+  const getScore = () =>{
+    let currentUser = [];
+    const date = new Date().toDateString();
+    const name = JSON.parse(window?.localStorage.getItem('name')||'You')
+    const score = +JSON.parse(window?.localStorage.getItem('finalScore')||'0') ;
+    currentUser = [{name, date, score}];
+    
+    userScoreSorted= [...userScores, ...currentUser];
+    userScoreSorted= userScoreSorted.sort((a,b) =>  b.score-a.score);
+    setShowScoreBoard(true)
+    console.log(userScoreSorted,'currentUser')
+  }
   return (
     <div className="imageContainer">
       <div className="boardContainer">
@@ -35,29 +40,39 @@ const ScoreBoard = () => {
           <div>
             <h4>SCOREBOARD</h4>
           </div>
-          <div >
-            <div className={`${styles.tableHeader}`} >
+          <div>
+            <div className={`${styles.tableHeader}`}>
               <div>Rank</div>
               <div>Name</div>
               <div>Date</div>
               <div>Score</div>
             </div>
-            <div className={`${styles.tableBody}`} >
-              <div>{rank}</div>
-              <div>{name}</div>
-              <div>{date}</div>
-              <div>{score}</div>
+            <div className={`${styles.tableBody}`}>
+              {showScoreBoard && userScoreSorted.map((user,rank:number) =>{
+                return(
+                  <>
+                    <div>{rank+1}</div>
+                    <div>{user.name}</div>
+                    <div>{user.date}</div>
+                    <div>{user.score}</div>
+                  </>
+              )})}
+              
             </div>
           </div>
           <div>
-            <Link href='/'> <button className={`${styles.home}`}> Home</button></Link>
-            <Link href='/startgame'><button  className={`${styles.play}`}>Play !</button></Link>
+            <Link href="/">
+              {" "}
+              <button className={`${styles.home}`}> Home</button>
+            </Link>
+            <Link href="/startgame">
+              <button className={`${styles.play}`}>Play !</button>
+            </Link>
           </div>
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ScoreBoard;

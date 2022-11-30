@@ -1,14 +1,22 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import useLocalStorage from "./../../components/utility/useStorage/";
+import useLocalStorage from "../../components/hooks/useStorage";
 import { after } from "underscore";
-import { fetchData } from "./../../components/utility/fetchData";
-import { cacheImages } from "../../components/utility/prerender";
+import { fetchData } from "../../utils/fetchData";
+import { cacheImages } from "../../components/prerender";
 import UserStats from "../../components/UserStats";
-import fox_loading from '../../public/static/images/fox_loading.gif'
+import fox_loading from "../../public/static/images/fox_loading.gif";
+import styles from '../../styles/StartGame.module.css'
+
+type url ={
+  message?:string,
+  image?:string,
+  url?:string
+}
 type IProps = { data: string[] };
-let imageStore: any = [];
+let imageStore:string[] = [];
+
 let timeInterval: ReturnType<typeof setInterval>;
 let timeIntervalFetch: ReturnType<typeof setInterval>;
 
@@ -17,10 +25,10 @@ function ImagesComp(props: IProps) {
   const score = useRef(0);
   const [imageToRender, setImageToRender] = useState<string[]>([]);
   const router = useRouter();
-  const queryData: any = router.query;
+  const queryData = router.query;
   let initialRender = useRef(true);
   const [finalScore, setFinalScore] = useLocalStorage("finalScore", "0");
-  const ImageUrlFromQuery: string[] = Object.values(queryData);
+  const ImageUrlFromQuery:string[] | undefined = Object.values(queryData);
 
   /*
   1. It’s fetching the data from the API.
@@ -39,12 +47,7 @@ function ImagesComp(props: IProps) {
     let geNexBatchImages = imageStore.splice(0, 9);
     setImageToRender(geNexBatchImages);
   };
-  /*
-  1. We’re importing the updateImageStore function from the imageStore.ts file.
-  2. We’re creating a new variable called newImagesUrlFetched and assigning it to the result of the imageUrlFetched function.
-  3. We’re using the spread operator to add the newImagesUrlFetched array to the imageStore array.
-  4. We’re exporting the updateImageStore function.
-  */
+ 
   const updateImageStore = (newImagesUrlFetched: string[]) => {
     imageStore = [...imageStore, ...newImagesUrlFetched];
   };
@@ -57,7 +60,7 @@ function ImagesComp(props: IProps) {
       updateImageStore(ImageUrlFromQuery);
       cacheImages(ImageUrlFromQuery);
     }
-    if(props?.data) {
+    if (props?.data) {
       updateImageStore(props.data);
       cacheImages(props.data);
     }
@@ -65,7 +68,6 @@ function ImagesComp(props: IProps) {
       refetchData();
     }
     updateReFetchedImage();
-    //setImageToRender(imageStore.splice(0,9))
   };
 
   /*
@@ -93,13 +95,12 @@ function ImagesComp(props: IProps) {
   }, []);
 
   /*
-  1. We’re using the useEffect hook to set an interval of 30 seconds.
-  2. We’re using the useEffect hook to clear the interval when the component unmounts.
-  3. We’re using the useEffect hook to set the router to redirect to the scoreboard page after 30 seconds.
+     set an interval of 30 seconds and clear the interval when the component unmounts 
+     and redirect to the scoreboard page.
   */
   useEffect(() => {
     timeInterval = setInterval(() => {
-       router.push("/scoreboard");
+      router.push("/scoreboard");
     }, 30000);
     return () => {
       clearInterval(timeInterval);
@@ -107,35 +108,29 @@ function ImagesComp(props: IProps) {
   }, []);
 
   /*
-  1. We’re using the useEffect hook to set an interval that will call the refetchData function every 300 milliseconds.
-  2. We’re using the useEffect hook to clear the interval when the component unmounts.
+  1. We’re using the useEffect hook to set an interval that will call the refetchData function every 500 milliseconds.
   */
   useEffect(() => {
     timeIntervalFetch = setInterval(() => {
       refetchData();
-    }, 1000);
+    }, 500);
     return () => {
       clearInterval(timeIntervalFetch);
     };
   }, []);
 
   /*
-  1. It’s using the useEffect hook to call the fetchImages function every time the imageToRender state changes.
-  2. It’s using the useEffect hook to clear the timeIntervalFetch if imageStore length is more than 600.
+     clear the timeIntervalFetch if cache imageStore length is more than 1000.
   */
   useEffect(() => {
-    if (imageStore.length > 600) {
+    if (imageStore.length > 1000) {
       clearInterval(timeIntervalFetch);
     }
   }, [imageToRender]);
 
   /*
-  1. We’re setting the showAllImagesOnBoard to false.
-  2. We’re setting the clickedFox to true if the url contains the word “fox”.
-  3. We’re setting the incrementScore to the current score + 1 if the clickedFox is true.
-  4. We’re setting the decrementScore to the current score - 1 if the clickedFox is false.
-  5. We’re setting the finalScore to the incrementScore or decrementScore.
-  6. We’re updating the reFetchedImage to the current image.
+     We’re updating url contains the word “fox” to increase current score or else decrease score
+     also reFetchedImage if cached image is empty.
   */
   const onClickAnyImage = async (index: number, url: string) => {
     setShowAllImagesOnBoard(false);
@@ -147,10 +142,9 @@ function ImagesComp(props: IProps) {
       let decrementScore = score.current--;
       setFinalScore(decrementScore.toString());
     }
-    if(imageStore.length<=9){
+    if (imageStore.length <= 9) {
       refetchData();
     }
-    //refetchData()
     updateReFetchedImage();
   };
 
@@ -158,28 +152,22 @@ function ImagesComp(props: IProps) {
     <div className="imageContainer">
       <div className="boardContainer">
         <div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr', paddingBottom:'10px'}}>
+          <div className={`${styles.userStats}`}>
             <div>Score:{score.current}</div>
             <UserStats />
           </div>
           <>
             <div
-              style={{
-                display: showAllImagesOnBoard ? "none" : "block",
-                position: "absolute",
-                top: "35%",
-                left: "45%",
-              }}
-            >
-              <Image src={fox_loading} unoptimized={true} width="200" height="200" alt="loading" />
+              className={`${styles.loadingFox} ${showAllImagesOnBoard ? styles.none : styles.block}`}>
+              <Image
+                src={fox_loading}
+                unoptimized={true}
+                width="200"
+                height="200"
+                alt="loading"
+              />
             </div>
-            <div
-              style={{
-                visibility: showAllImagesOnBoard ? "visible" : "hidden",
-                display: "grid",
-                gridTemplateColumns: "150px 150px 150px",
-              }}
-            >
+            <div className={`${styles.gameBoard} ${showAllImagesOnBoard ? styles.visible : styles.hidden}`}>
               {imageToRender.map((url: any, index: number) => (
                 <div className="grid-item" key={url}>
                   <Image
@@ -200,17 +188,11 @@ function ImagesComp(props: IProps) {
   );
 }
 export async function getStaticProps() {
-  // Call an external API endpoint to get image urls data.
   const data = (await fetchData()) || [];
-  //const urls = await res.json()
-
-  // By returning { props: { data } }, the ImagesComp component
-  // will receive `data` as a prop at build time
   return {
     props: {
       data,
     },
-    //revalidate: 1
   };
 }
 export default ImagesComp;

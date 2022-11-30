@@ -1,0 +1,32 @@
+.userStats{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-bottom: 10px;
+}
+
+.gameBoard{
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+}
+
+.visible{
+    visibility:visible;
+}
+
+.hidden{
+    visibility:hidden;
+}
+
+.block{
+    display: block;
+}
+
+.none{
+    display: none;
+}
+
+.loadingFox{
+    position: absolute;
+    top: 35%;
+    left: 45%;
+}
