@@ -28,7 +28,7 @@ function ImagesComp(props: IProps) {
   const queryData = router.query;
   let initialRender = useRef(true);
   const [finalScore, setFinalScore] = useLocalStorage("finalScore", "0");
-  const ImageUrlFromQuery:string[] | undefined = Object.values(queryData);
+  const ImageUrlFromQuery:any = Object.values(queryData);
 
   /*
   1. It’s fetching the data from the API.
@@ -108,7 +108,8 @@ function ImagesComp(props: IProps) {
   }, []);
 
   /*
-  1. We’re using the useEffect hook to set an interval that will call the refetchData function every 500 milliseconds.
+    Set an interval that will call the refetchData function every 500 milliseconds 
+    so that we can prefetch images needs to be served.
   */
   useEffect(() => {
     timeIntervalFetch = setInterval(() => {
