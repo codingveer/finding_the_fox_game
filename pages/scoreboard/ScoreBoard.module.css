@@ -1,7 +1,6 @@
 .welcomeBoardContainer{
   display: grid;
-  grid-template-rows: 30px 30px 250px;
-  row-gap: 90px;
+  grid-template-rows:auto;
   justify-items: center;
   align-items: center;
 }
@@ -24,7 +23,9 @@
   padding: 5px;
 }
 
-
+.buttons{
+  margin-top: 25px;
+}
 
 .welcomeBoardContainer button {
   background-color: #FFC143;

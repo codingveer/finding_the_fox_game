@@ -6,6 +6,7 @@ import useLocalStorage from "../../components/hooks/useStorage/";
 import { cacheImages } from "../../components/prerender";
 import { fetchData } from "../../utils/fetchData";
 
+
 const Home: NextPage = (props: any) => {
   // Similar to useState but first args is key to the value in local storage.
   const [name, setName] = useLocalStorage("name", "");
@@ -15,15 +16,15 @@ const Home: NextPage = (props: any) => {
     Run the cacheImages function and clear player name when the component is mounted.
   */
   useEffect(() => {
-    if(props?.data){
+    if (props?.data) {
       cacheImages(props.data);
     }
     setName("");
   }, []);
 
   /*
-  1. We’re setting the editPlayerNameInput state to false if the name is not empty
-       to true if the name is empty.
+  1. We’re setting the editPlayerNameInput state to false if the name is not empty and
+      set to true if the name is empty.
   */
   const handleBlur = () => {
     name !== "" ? setEditPlayerNameInput(false) : setEditPlayerNameInput(true);
@@ -37,52 +38,52 @@ const Home: NextPage = (props: any) => {
           </div>
           {editPlayerNameInput ? (
             <>
-            <div>
-              <label htmlFor="name">
-                Name:
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Enter your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onBlur={handleBlur}
-                />
-              </label>
-            </div>
-            <div>
-              <button
-                style={{
-                  border: "1px solid #60af56",
-                  background:"#fff",
-                  color:"#333"
-                }}
-              >
-                Play !
-              </button>
-            </div>
+              <div>
+                <label htmlFor="name">
+                  Name:
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e: { target: { value: string | ((val: string) => string); }; }) => setName(e.target.value)}
+                    onBlur={handleBlur}
+                  />
+                </label>
+              </div>
+              <div>
+                <button
+                  style={{
+                    border: "1px solid #60af56",
+                    background: "#fff",
+                    color: "#333"
+                  }}
+                >
+                  Play !
+                </button>
+              </div>
             </>
           ) : (
             <>
-            <div
-              className={`${styles.editPlayerNameInputName}`}
-              onClick={() => {setEditPlayerNameInput(true) }}
-            >
-              Hello {name}
-            </div> 
-            <div>
-              <Link
-                href={{
-                  pathname: "/startgame",
-                  query: { ...props.data },
-                }}
-                as={`/startgame`}
+              <div
+                className={`${styles.editPlayerNameInputName}`}
+                onClick={() => { setEditPlayerNameInput(true) }}
               >
-                <button>
-                  Play !
-                </button>
-              </Link>
-            </div>
+                Hello {name}
+              </div>
+              <div>
+                <Link
+                  href={{
+                    pathname: "/startgame",
+                    query: { ...props.data },
+                  }}
+                  as={`/startgame`}
+                >
+                  <button>
+                    Play !
+                  </button>
+                </Link>
+              </div>
             </>
           )}
         </div>
@@ -93,7 +94,7 @@ const Home: NextPage = (props: any) => {
 
 export async function getStaticProps() {
   const data = (await fetchData()) || [];
-   return {
+  return {
     props: {
       data,
     },
