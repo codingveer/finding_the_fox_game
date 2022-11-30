@@ -37,4 +37,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Also Deployed on Netlify for quick preview
 
-Check out our https://preeminent-taffy-946516.netlify.app/
+Check out out
+
+ https://preeminent-taffy-946516.netlify.app/
