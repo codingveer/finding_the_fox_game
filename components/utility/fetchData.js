@@ -56,9 +56,8 @@ async function getDataFromImageUrl(){
 It fetches data from the API and returns the data.
 */
 const fetchData = async () => {
-  let retry = 3;
   let data = await getDataFromImageUrl();
-  if(data.length<9){
+  if(data?.length<9){
     data=[]
   }
   return data

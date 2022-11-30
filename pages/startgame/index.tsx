@@ -57,7 +57,7 @@ function ImagesComp(props: IProps) {
       updateImageStore(ImageUrlFromQuery);
       cacheImages(ImageUrlFromQuery);
     }
-    if(props.data) {
+    if(props?.data) {
       updateImageStore(props.data);
       cacheImages(props.data);
     }
