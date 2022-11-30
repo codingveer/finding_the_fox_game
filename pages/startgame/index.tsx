@@ -20,6 +20,7 @@ function ImagesComp(props: IProps) {
   const queryData: any = router.query;
   let initialRender = useRef(true);
   const [finalScore, setFinalScore] = useLocalStorage("finalScore", "0");
+  const ImageUrlFromQuery: string[] = Object.values(queryData);
 
   /*
   1. It’s fetching the data from the API.
@@ -52,21 +53,18 @@ function ImagesComp(props: IProps) {
   It sets the imageStore to the data that is passed in from the props.
   */
   const startGameInit = () => {
-    if (Object.keys(queryData).length) {
-      let ImageUrlFromQuery: string[] = Object.values(queryData);
+    if (ImageUrlFromQuery?.length) {
       updateImageStore(ImageUrlFromQuery);
-      updateReFetchedImage();
       cacheImages(ImageUrlFromQuery);
     }
-    if (props.data) {
+    if(props.data) {
       updateImageStore(props.data);
-      updateReFetchedImage();
       cacheImages(props.data);
+    }
+    if (!props.data && !ImageUrlFromQuery.length) {
       refetchData();
     }
-    if (!imageStore.length) {
-      refetchData();
-    }
+    updateReFetchedImage();
     //setImageToRender(imageStore.splice(0,9))
   };
 
@@ -148,6 +146,9 @@ function ImagesComp(props: IProps) {
     } else {
       let decrementScore = score.current--;
       setFinalScore(decrementScore.toString());
+    }
+    if(imageStore.length<=9){
+      refetchData();
     }
     //refetchData()
     updateReFetchedImage();

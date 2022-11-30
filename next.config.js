@@ -3,8 +3,15 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images:{
-    domains:['api.thecatapi.com','cdn1.theimageapi.com','25.media.tumblr.com','cdn2.thecatapi.com','images.dog.ceo','randomfox.ca','27.media.tumblr.com','28.media.tumblr.com','localhost'],
+    domains:['api.thecatapi.com','dog.ceo','cdn1.theimageapi.com','25.media.tumblr.com','cdn2.thecatapi.com','images.dog.ceo','randomfox.ca','27.media.tumblr.com','28.media.tumblr.com','localhost'],
     remotePatterns: [
+     
+      {
+        protocol: 'https',
+        pathname: 'dog.ceo',
+        port: '443',
+        hostname: '**.dog.ceo',
+      },
       {
         protocol: 'https',
         pathname: 'theimageapi.com',

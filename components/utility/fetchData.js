@@ -14,14 +14,6 @@ function shuffleArray(array) {
 }
 
 /*
-It fetches data from the API and returns the data.
-*/
-const fetchData = async () => {
-  let imageUrls =[];
-  const fetchWoflImage = fetch("https://randomfox.ca/floof/");
-  let promiseCallApi = [];
-  let ApiCalled =0;
-  /*
   1. It creates a promise array called promiseCallApi.
   2. It pushes the fetch() function to the promiseCallApi array.
   3. It creates a variable called ApiCalled and sets it to 0.
@@ -30,16 +22,21 @@ const fetchData = async () => {
   6. It increments ApiCalled by 1.
   7. It returns promiseCallApi.
   */
-  while(ApiCalled< 4) {
-    promiseCallApi
-    .push(
-          fetch("https://api.thecatapi.com/v1/images/search"),
-          fetch("https://dog.ceo/api/breeds/image/random")
-    )
-    ApiCalled+=1
-  }
-  promiseCallApi.push(fetchWoflImage);
+async function getDataFromImageUrl(){
   try {
+    let imageUrls =[];
+    const fetchWoflImage = fetch("https://randomfox.ca/floof/");
+    let promiseCallApi = [];
+    let ApiCalled =0;
+    while(ApiCalled< 4) {
+      promiseCallApi
+      .push(
+            fetch("https://api.thecatapi.com/v1/images/search"),
+            fetch("https://dog.ceo/api/breeds/image/random")
+      )
+      ApiCalled+=1
+    }
+    promiseCallApi.push(fetchWoflImage);
     const awaitForPromise = await Promise.all(promiseCallApi);
     const getResponseFromAllApi = await Promise.all(
       awaitForPromise.map((res) => res.json())
@@ -54,6 +51,17 @@ const fetchData = async () => {
   } catch (e) {
     console.error(e);
   }
+}
+/*
+It fetches data from the API and returns the data.
+*/
+const fetchData = async () => {
+  let retry = 3;
+  let data = await getDataFromImageUrl();
+  if(data.length<9){
+    data=[]
+  }
+  return data
 };
 
 

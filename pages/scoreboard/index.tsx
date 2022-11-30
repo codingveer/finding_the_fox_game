@@ -18,12 +18,11 @@ const ScoreBoard = () => {
   7. If it does, we’re setting the rank state to the value of the localStorage.
   */
   useEffect(() => {
-      // @ts-ignore
+      
       if(window?.localStorage.getItem(name)){
         setName(JSON.parse( window?.localStorage.getItem(name) || ' '));
       }
       if(window?.localStorage.getItem(name)){
-        // @ts-ignore
         setScore(JSON.parse(window?.localStorage.getItem('finalScore')|| ' '));
       }   
      
