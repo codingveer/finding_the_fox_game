@@ -1,3 +1,15 @@
+##How it works
+
+• Countdown timer will run from 30 seconds to 0
+• 3x3 pictures will be showing Using a web API providing the pictures
+• Clicking a picture will show the next set of images
+• All pictures should show up at the same time
+• While the pictures are loading it shows a loading screen
+• Images preloaded in the background to prevent a delay for the player
+• Player will not see images loading
+• The score formula is: • Score = SUM(fox click) – SUM(dog or cat click)
+• After 30 seconds the player will be redirected to the scoreboard
+
 ## Built with
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
