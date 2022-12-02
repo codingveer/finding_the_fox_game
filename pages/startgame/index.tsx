@@ -137,10 +137,10 @@ function ImagesComp(props: IProps) {
     setShowAllImagesOnBoard(false);
     const clickedFox = url.includes("fox");
     if (clickedFox) {
-      let incrementScore = score.current++;
+      let incrementScore = ++score.current;
       setFinalScore(incrementScore.toString());
     } else {
-      let decrementScore = score.current--;
+      let decrementScore = --score.current;
       setFinalScore(decrementScore.toString());
     }
     if (imageStore.length <= 9) {
