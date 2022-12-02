@@ -1,4 +1,4 @@
-##How it works
+## How it works
 
 • Countdown timer will run from 30 seconds to 0
 
