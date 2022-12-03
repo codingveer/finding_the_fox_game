@@ -31,7 +31,6 @@ const ScoreBoard = () => {
     userScoreSorted = [...userScores, ...currentUser];
     userScoreSorted = userScoreSorted.sort((a, b) => b.score - a.score);
     setShowScoreBoard(true)
-    console.log(userScoreSorted, 'currentUser')
   }
   return (
     <div className="imageContainer">

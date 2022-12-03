@@ -17,7 +17,7 @@ function shuffleArray(array: string[]) {
 async function getDataFromImageUrl() {
 
   let imageUrls: string[] = [];
-  const fetchWolfImage = fetch(FOX_URL);
+  const fetchWolfImage = fetch(FOX_URL).then(resolve => resolve).catch(e =>console.log(e));
   let promiseCallApi = [];
   let ApiCalled = 0;
   let imageUrlsData = []
@@ -25,19 +25,19 @@ async function getDataFromImageUrl() {
     while (ApiCalled < 4) {
       promiseCallApi
         .push(
-          fetch(CAT_URL),
-          fetch(DOG_URL)
+          fetch(CAT_URL).then(resolve => resolve).catch(e =>console.log(e)),
+          fetch(DOG_URL).then(resolve => resolve).catch(e =>console.log(e))
         )
       ApiCalled += 1
     }
     promiseCallApi.push(fetchWolfImage);
     const awaitForPromise = await Promise.all(promiseCallApi);
     const getResponseFromAllApi = await Promise.all(
-      awaitForPromise.map((res) => res.json())
+      awaitForPromise.map((res) => res?.json())
     )
     imageUrlsData = getResponseFromAllApi
       .flat()
-      .map((data) => data.message || data.image || data.url);
+      .map((data) => data?.message || data?.image || data?.url);
   } catch (e) {
     console.error(e);
   }

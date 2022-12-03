@@ -37,8 +37,11 @@ function ImagesComp(props: IProps) {
   */
   const refetchData = async () => {
     let getData: string[] = (await fetchData()) || [];
-    imageStore = [...imageStore, ...getData];
-    cacheImages(getData);
+    if(getData?.length){
+      imageStore = [...imageStore, ...getData];
+      cacheImages(getData);
+    }
+    return
   };
   /*
   It fetches the next batch of images from the imageStore and sets the imageToRender to the next batch of images.
@@ -49,7 +52,9 @@ function ImagesComp(props: IProps) {
   };
  
   const updateImageStore = (newImagesUrlFetched: string[]) => {
-    imageStore = [...imageStore, ...newImagesUrlFetched];
+    if(newImagesUrlFetched.length){
+      imageStore = [...imageStore, ...newImagesUrlFetched];
+    }
   };
 
   /*
@@ -170,7 +175,7 @@ function ImagesComp(props: IProps) {
             </div>
             <div className={`${styles.gameBoard} ${showAllImagesOnBoard ? styles.visible : styles.hidden}`}>
               {imageToRender.map((url: any, index: number) => (
-                <div className="grid-item" key={url}>
+                <div className="grid-item" key={`${url}_${index}`}>
                   <Image
                     src={url}
                     onLoad={(e) => onComplete(e)}
