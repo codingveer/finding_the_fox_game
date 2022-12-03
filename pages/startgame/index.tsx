@@ -119,7 +119,7 @@ function ImagesComp(props: IProps) {
   useEffect(() => {
     timeIntervalFetch = setInterval(() => {
       refetchData();
-    }, 500);
+    }, 1000);
     return () => {
       clearInterval(timeIntervalFetch);
     };
